@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import "dart:developer" as devtools show log;
-
 import 'package:my_notes/constants/routes.dart';
+import 'package:my_notes/utilities/parse_exc_msg.dart';
+import 'package:my_notes/utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -29,22 +29,7 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
-  String parseFirebaseAuthExceptionMessage(
-      {String plugin = "auth", required String? input}) {
-    if (input == null) {
-      return "unknown";
-    }
-
-    // https://regexr.com/7en3h
-    String regexPattern = r'(?<=\(' + plugin + r'/)(.*?)(?=\)\.)';
-    RegExp regExp = RegExp(regexPattern);
-    Match? match = regExp.firstMatch(input);
-    if (match != null) {
-      return match.group(0)!;
-    }
-
-    return "unknown";
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +62,12 @@ class _LoginViewState extends State<LoginView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: email,
                   password: password,
                 );
-                Navigator.of(context).pushNamedAndRemoveUntil( //rovnako problem s Async build context tu
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  //rovnako problem s Async build context tu
                   notesRoute,
                   (route) => false,
                 );
@@ -89,10 +75,14 @@ class _LoginViewState extends State<LoginView> {
                 final code =
                     parseFirebaseAuthExceptionMessage(input: e.message);
                 if (code == "user-not-found") {
-                  devtools.log("User not found");
+                  await showErrorDialog(context, "User does not exist");
                 } else if (code == "wrong-password") {
-                  devtools.log("Wrong password");
+                  await showErrorDialog(context, "Incorrect password");
+                } else {
+                  await showErrorDialog(context, "Error: $code");
                 }
+              } catch (e) {
+                await showErrorDialog(context, e.toString());
               }
             },
             child: const Text("Login"),
@@ -110,3 +100,4 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
+

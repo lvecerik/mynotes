@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "dart:developer" as devtools show log;
-
 import 'package:my_notes/constants/routes.dart';
+import 'package:my_notes/utilities/parse_exc_msg.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -29,22 +29,6 @@ class _RegisterViewState extends State<RegisterView> {
     super.dispose();
   }
 
-  String parseFirebaseAuthExceptionMessage(
-      {String plugin = "auth", required String? input}) {
-    if (input == null) {
-      return "unknown";
-    }
-
-    // https://regexr.com/7en3h
-    String regexPattern = r'(?<=\(' + plugin + r'/)(.*?)(?=\)\.)';
-    RegExp regExp = RegExp(regexPattern);
-    Match? match = regExp.firstMatch(input);
-    if (match != null) {
-      return match.group(0)!;
-    }
-
-    return "unknown";
-  }
 
   @override
   Widget build(BuildContext context) {
