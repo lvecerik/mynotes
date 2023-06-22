@@ -21,6 +21,7 @@ void main() {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
+        verifyRoute: (context) => const VerifyEmailView(),
       },
     ),
   );
@@ -55,4 +56,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
