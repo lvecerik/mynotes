@@ -1,8 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as dewvtools show log;
-
-import 'package:my_notes/view/login_view.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -26,9 +23,12 @@ class _NotesViewState extends State<NotesView> {
                 final shouldLogOut = await showLogOutDialog(context);
                 if (shouldLogOut) {
                   await FirebaseAuth.instance.signOut();
-                  if (context.mounted) { // TOTO NIE JE DOBRY PRACTICE, ZISTI VIAC A PREROB --> original error https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("/login/", (_) => false);
+                  if (context.mounted) {
+                    // TOTO NIE JE DOBRY PRACTICE, ZISTI VIAC A PREROB --> original error https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      "/login/",
+                      (_) => false,
+                    );
                   }
                 }
                 break;
