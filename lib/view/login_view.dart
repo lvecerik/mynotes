@@ -29,8 +29,6 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,11 +64,16 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  //rovnako problem s Async build context tu
-                  notesRoute,
-                  (route) => false,
-                );
+                final user = FirebaseAuth.instance.currentUser;
+                if (user?.emailVerified ?? false) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    //rovnako problem s Async build context tu
+                    notesRoute,
+                    (route) => false,
+                  );
+                } else {
+                  Navigator.of(context).pushNamed(verifyRoute);
+                }
               } on FirebaseAuthException catch (e) {
                 final code =
                     parseFirebaseAuthExceptionMessage(input: e.message);
@@ -100,4 +103,3 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
-
