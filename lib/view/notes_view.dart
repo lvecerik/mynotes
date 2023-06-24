@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_notes/constants/routes.dart';
+import 'package:my_notes/services/auth/auth_service.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -23,7 +23,7 @@ class _NotesViewState extends State<NotesView> {
               case MenuAction.logout:
                 final shouldLogOut = await showLogOutDialog(context);
                 if (shouldLogOut) {
-                  await FirebaseAuth.instance.signOut();
+                  await AuthService.firebase().signOut();
                   if (context.mounted) {
                     // TOTO NIE JE DOBRY PRACTICE, ZISTI VIAC A PREROB --> original error https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
                     Navigator.of(context).pushNamedAndRemoveUntil(
