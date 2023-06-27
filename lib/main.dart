@@ -5,7 +5,6 @@ import 'package:my_notes/view/notes_view.dart';
 import 'package:my_notes/view/verify_email_view.dart';
 import 'package:my_notes/view/login_view.dart';
 import 'package:my_notes/view/register_view.dart';
-import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
