@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
-import 'package:my_notes/services/crud/notes_service.dart';
+import 'package:my_notes/utilities/dialogs/sign_out_dialog.dart';
+import 'package:my_notes/view/notes/notes_list_view.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -11,7 +11,7 @@ class NotesView extends StatefulWidget {
   State<NotesView> createState() => _NotesViewState();
 }
 
-enum MenuAction { logout }
+enum MenuAction { signout }
 
 class _NotesViewState extends State<NotesView> {
   late final NotesService _notesService;
@@ -37,9 +37,9 @@ class _NotesViewState extends State<NotesView> {
           ),
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
-              case MenuAction.logout:
-                final shouldLogOut = await showLogOutDialog(context);
-                if (shouldLogOut) {
+              case MenuAction.signout:
+                final shouldSignOut = await showSignOutDialog(context);
+                if (shouldSignOut) {
                   await AuthService.firebase().signOut();
                   if (context.mounted) {
                     // TOTO NIE JE DOBRY PRACTICE, ZISTI VIAC A PREROB --> original error https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
@@ -54,7 +54,7 @@ class _NotesViewState extends State<NotesView> {
           }, itemBuilder: (context) {
             return const [
               PopupMenuItem<MenuAction>(
-                value: MenuAction.logout,
+                value: MenuAction.signout,
                 child: Text("Sign out"),
               ),
             ];
@@ -75,18 +75,10 @@ class _NotesViewState extends State<NotesView> {
                       if (snapshot.hasData) {
                         final allNotes = snapshot.data as List<DatabaseNote>;
                         print(allNotes);
-                        return ListView.builder(
-                          itemCount: allNotes.length,
-                          itemBuilder: (context, index) {
-                            final note = allNotes[index];
-                            return ListTile(
-                              title: Text(
-                                note.text,
-                                maxLines: 1,
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            );
+                        return NotesListView(
+                          notes: allNotes,
+                          onDeleteNote: (note) async {
+                            await _notesService.deleteNote(id: note.id);
                           },
                         );
                       } else {
@@ -108,30 +100,4 @@ class _NotesViewState extends State<NotesView> {
       ),
     );
   }
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text("Sign out"),
-        content: const Text("Are you sure you want to sign out?"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: const Text("Sign out!"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: const Text("Cancel"),
-          )
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
 }
