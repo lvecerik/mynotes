@@ -52,9 +52,15 @@
 
 //     await getNote(id: note.id);
 
-//     final updateCount = await db.update(notesTable, {
-//       textColumn: text,
-//     });
+//     final updateCount = await db.update(
+//       notesTable,
+//       {
+//         textColumn: text,
+//       },
+//       where: "id = ?",
+//       whereArgs: [note.id],
+//     );
+
 //     if (updateCount == 0) {
 //       throw CouldNotUpdateNote();
 //     } else {
