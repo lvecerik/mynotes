@@ -40,7 +40,7 @@ class _NotesViewState extends State<NotesView> {
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
               case MenuAction.signout:
-                final shouldSignOut = await showSignOutDialog(context, "");
+                final shouldSignOut = await showSignOutDialog(context);
                 if (shouldSignOut) {
                   await AuthService.firebase().signOut();
                   if (context.mounted) {

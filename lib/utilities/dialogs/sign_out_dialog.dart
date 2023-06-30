@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_notes/utilities/dialogs/generic_dialog.dart';
 
-Future<bool> showSignOutDialog(BuildContext context, String text) {
+Future<bool> showSignOutDialog(BuildContext context) {
   return showGenericDialog<bool>(
     context: context,
     title: "Sign out",
