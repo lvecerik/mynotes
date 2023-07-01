@@ -3,9 +3,11 @@ import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
 import 'package:my_notes/view/notes/create_update_note_view.dart';
 import 'package:my_notes/view/notes/notes_view.dart';
+import 'package:my_notes/view/password_reset_view.dart';
 import 'package:my_notes/view/verify_email_view.dart';
 import 'package:my_notes/view/login_view.dart';
 import 'package:my_notes/view/register_view.dart';
+import 'package:path/path.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +20,12 @@ void main() {
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
       routes: {
-        loginRoute: (context) => const LoginView(),
+        signInRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
         verifyRoute: (context) => const VerifyEmailView(),
         createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
+        passwordResetRoute: (context) => const PasswordResetView()
       },
     ),
   );

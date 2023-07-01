@@ -28,72 +28,71 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Your Notes"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
-            },
-            icon: const Icon(Icons.add),
-          ),
-          PopupMenuButton<MenuAction>(onSelected: (value) async {
-            switch (value) {
-              case MenuAction.signout:
-                final shouldSignOut = await showSignOutDialog(context);
-                if (shouldSignOut) {
-                  await AuthService.firebase().signOut();
-                  if (context.mounted) {
-                    // TOTO NIE JE DOBRY PRACTICE, ZISTI VIAC A PREROB --> original error https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      loginRoute,
-                      (_) => false,
-                    );
-                  }
-                }
-                break;
-            }
-          }, itemBuilder: (context) {
-            return const [
-              PopupMenuItem<MenuAction>(
-                value: MenuAction.signout,
-                child: Text("Sign out"),
-              ),
-            ];
-          })
-        ],
-      ),
-      body:StreamBuilder(
-                stream: _notesService.allNotes(ownerUserId: userId),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.waiting:
-                    case ConnectionState.active:
-                      if (snapshot.hasData) {
-                        final allNotes = snapshot.data as Iterable<CloudNote>;
-                        return NotesListView(
-                          notes: allNotes,
-                          onDeleteNote: (note) async {
-                            await _notesService.deleteNote(documentId: note.documentId);
-                          },
-                          onTap: (note) {
-                            Navigator.of(context).pushNamed(
-                                createOrUpdateNoteRoute,
-                                arguments: note);
-                          },
-                        );
-                      } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    default:
-                      return const Center(
-                        child: CircularProgressIndicator(),
+        appBar: AppBar(
+          title: const Text("Your Notes"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(createOrUpdateNoteRoute);
+              },
+              icon: const Icon(Icons.add),
+            ),
+            PopupMenuButton<MenuAction>(onSelected: (value) async {
+              switch (value) {
+                case MenuAction.signout:
+                  final shouldSignOut = await showSignOutDialog(context);
+                  if (shouldSignOut) {
+                    await AuthService.firebase().signOut();
+                    if (context.mounted) {
+                      // TOTO NIE JE DOBRY PRACTICE, ZISTI VIAC A PREROB --> original error https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        signInRoute,
+                        (_) => false,
                       );
+                    }
                   }
-                },
-              )
-    );
+                  break;
+              }
+            }, itemBuilder: (context) {
+              return const [
+                PopupMenuItem<MenuAction>(
+                  value: MenuAction.signout,
+                  child: Text("Sign out"),
+                ),
+              ];
+            })
+          ],
+        ),
+        body: StreamBuilder(
+          stream: _notesService.allNotes(ownerUserId: userId),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+              case ConnectionState.active:
+                if (snapshot.hasData) {
+                  final allNotes = snapshot.data as Iterable<CloudNote>;
+                  return NotesListView(
+                    notes: allNotes,
+                    onDeleteNote: (note) async {
+                      await _notesService.deleteNote(
+                          documentId: note.documentId);
+                    },
+                    onTap: (note) {
+                      Navigator.of(context)
+                          .pushNamed(createOrUpdateNoteRoute, arguments: note);
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              default:
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+            }
+          },
+        ));
   }
 }

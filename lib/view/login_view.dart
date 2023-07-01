@@ -78,7 +78,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    SizedBox(       //emial
+                    SizedBox(
                       width: 250,
                       child: TextField(
                         controller: _email,
@@ -86,7 +86,7 @@ class _LoginViewState extends State<LoginView> {
                         autocorrect: false,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
-                          hintText: "Enter your email here",
+                          hintText: "Email",
                           hintStyle: TextStyle(color: Colors.black),
                           suffixIcon: Icon(Icons.mail),
                           suffixIconColor: Colors.black,
@@ -96,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                     ),
-                    SizedBox(       //password
+                    SizedBox(
                       width: 250,
                       child: TextField(
                         controller: _password,
@@ -104,7 +104,7 @@ class _LoginViewState extends State<LoginView> {
                         enableSuggestions: false,
                         autocorrect: false,
                         decoration: InputDecoration(
-                          hintText: "Enter your password here",
+                          hintText: "Password",
                           hintStyle: const TextStyle(color: Colors.black),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -123,13 +123,16 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                     ),
-                    Padding(        //forgot password
+                    Padding(
                       padding: const EdgeInsets.fromLTRB(10, 10, 30, 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  passwordResetRoute, (_) => false);
+                            },
                             child: const Text(
                               "Forgot Password?",
                               style: TextStyle(
@@ -142,7 +145,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    DecoratedBox(   //sign in
+                    DecoratedBox(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -214,7 +217,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    OutlinedButton.icon(  //google sign in
+                    OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(250, 50),
                         backgroundColor: Colors.transparent,
@@ -234,7 +237,8 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     const SizedBox(height: 50),
-                    Row(   //sign up
+                    Row(
+                      //sign up
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("First time here?"),
