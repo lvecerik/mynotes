@@ -13,15 +13,16 @@ void main() {
     MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,
       ),
+      debugShowCheckedModeBanner: false,
       home: const HomePage(),
       routes: {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
         verifyRoute: (context) => const VerifyEmailView(),
-        createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView()
+        createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
       },
     ),
   );
@@ -48,7 +49,9 @@ class HomePage extends StatelessWidget {
               return const LoginView();
             }
           default:
-            return const Text("Loading");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
         }
       },
     );

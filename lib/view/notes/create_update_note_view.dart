@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
 import 'package:my_notes/utilities/dialogs/cannot_share_empty_note_dialog.dart';
 import 'package:my_notes/utilities/generics/get_arguments.dart';
-import 'package:my_notes/services/cloud/cloud_storage_exceptions.dart';
 import 'package:my_notes/services/cloud/cloud_note.dart';
 import 'package:my_notes/services/cloud/firebase_cloud_storage.dart';
 import 'package:share_plus/share_plus.dart';
@@ -51,7 +50,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
     if (_textController.text.isEmpty && note != null) {
       _notesService.deleteNote(documentId: note.documentId);
-    }
+    } 
   }
 
   void _saveNoteIfTextNotEmpty() async {
