@@ -19,7 +19,7 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
-
+  <meta name="google-signin-client_id" content="958846460808-s048bvo403j1k1fneh7g2ft0ppggucnv.apps.googleusercontent.com">
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -55,5 +55,26 @@
       });
     });
   </script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+  
+  <script>
+    // paste the code copied
+    // from Firebase SDK below.
+    const firebaseConfig = {
+      apiKey: "AIzaSyCGoUm1mYZ-ivP9GMfKKpkNxiFORe77Dqo",
+      authDomain: "lvnotes.firebaseapp.com",
+      projectId: "lvnotes",
+      storageBucket: "lvnotes.appspot.com",
+      messagingSenderId: "958846460808",
+      appId: "1:958846460808:web:0727d336e380e1676a103d"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    
+  </script>
+  
 </body>
 </html>

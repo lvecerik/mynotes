@@ -17,7 +17,6 @@ class _PasswordResetViewState extends State<PasswordResetView> {
     _email = TextEditingController();
     super.initState();
   }
-
   @override
   void dispose() {
     _email.dispose();
@@ -46,12 +45,14 @@ class _PasswordResetViewState extends State<PasswordResetView> {
             children: [
               const SizedBox(height: 80),
               const Icon(
-                Icons.question_mark,
+                Icons.note_add,
                 size: 100,
               ),
               const SizedBox(height: 15),
-              const Text("Logoooo"),
-              const SizedBox(height: 80),
+              const Text("MyNotes", style: TextStyle(
+                fontSize: 30,
+              ),),
+              const SizedBox(height: 50),
               Container(
                 height: 280,
                 width: 325,

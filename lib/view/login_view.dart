@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import "package:my_notes/services/auth/google_auth.dart";
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_exceptions.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
@@ -53,12 +56,17 @@ class _LoginViewState extends State<LoginView> {
             children: [
               const SizedBox(height: 80),
               const Icon(
-                Icons.lock,
+                Icons.note_add,
                 size: 100,
               ),
               const SizedBox(height: 15),
-              const Text("Logoooo"),
-              const SizedBox(height: 80),
+              const Text(
+                "MyNotes",
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+              const SizedBox(height: 50),
               Container(
                 height: 480,
                 width: 325,
@@ -229,7 +237,11 @@ class _LoginViewState extends State<LoginView> {
                           ),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await GoogleAuthService().signInWithGoogle();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            notesRoute, (route) => false);
+                      },
                       icon: Image.asset("assets/images/google_icon.png"),
                       label: const Text(
                         "Sign in with Google",

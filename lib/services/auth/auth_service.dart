@@ -1,11 +1,11 @@
 import 'package:my_notes/services/auth/firebase_auth_provider.dart';
-
 import 'auth_provider.dart';
 import 'auth_user.dart';
 
-class AuthService implements AuthProvider {
+//má zmysel pri viacerých auth provideroch
+class AuthService implements AuthProvider {  
   final AuthProvider provider;
-  AuthService(this.provider);
+  AuthService(this.provider); 
 
   factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
