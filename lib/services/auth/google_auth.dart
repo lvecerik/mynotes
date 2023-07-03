@@ -10,6 +10,6 @@ class GoogleAuthService {
 
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
-    print(userCredential.user?.displayName);
+    //print(userCredential.user?.displayName);
   }
 }

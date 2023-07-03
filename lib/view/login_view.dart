@@ -1,6 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:my_notes/components/my_textfields.dart';
+import 'package:my_notes/constants/colors.dart';
 import "package:my_notes/services/auth/google_auth.dart";
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_exceptions.dart';
@@ -17,7 +17,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
-  var _isObscured;
+  late bool _isObscured;
 
   @override
   void initState() {
@@ -45,10 +45,7 @@ class _LoginViewState extends State<LoginView> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Color.fromRGBO(255, 147, 15, 1),
-                Color.fromRGBO(255, 249, 91, 1)
-              ],
+              colors: [backgroundGradient1, backgroundGradient2],
             ),
           ),
           child: Column(
@@ -86,24 +83,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    SizedBox(
-                      width: 250,
-                      child: TextField(
-                        controller: _email,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          hintText: "Email",
-                          hintStyle: TextStyle(color: Colors.black),
-                          suffixIcon: Icon(Icons.mail),
-                          suffixIconColor: Colors.black,
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    ),
+                    EmailTextField(controller: _email),
                     SizedBox(
                       width: 250,
                       child: TextField(
@@ -157,10 +137,8 @@ class _LoginViewState extends State<LoginView> {
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color.fromARGB(237, 0, 0, 0),
-                            Color.fromARGB(185, 0, 0, 0)
-                            // Color.fromRGBO(255, 147, 15, 1),
-                            // Color.fromRGBO(255, 249, 91, 1),
+                            buttonGradient1,
+                            buttonGradient2,
                           ],
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -189,9 +167,9 @@ class _LoginViewState extends State<LoginView> {
                               password: password,
                             );
                             final user = AuthService.firebase().currentUser;
+                            if (!mounted) return;
                             if (user?.isEmailVerified ?? false) {
                               Navigator.of(context).pushNamedAndRemoveUntil(
-                                //rovnako problem s Async build context tu
                                 notesRoute,
                                 (route) => false,
                               );
@@ -239,6 +217,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       onPressed: () async {
                         await GoogleAuthService().signInWithGoogle();
+                        if (!mounted) return;
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             notesRoute, (route) => false);
                       },

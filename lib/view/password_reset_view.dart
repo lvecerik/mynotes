@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notes/constants/colors.dart';
 import 'package:my_notes/constants/routes.dart';
 
 class PasswordResetView extends StatefulWidget {
@@ -17,6 +18,7 @@ class _PasswordResetViewState extends State<PasswordResetView> {
     _email = TextEditingController();
     super.initState();
   }
+
   @override
   void dispose() {
     _email.dispose();
@@ -35,8 +37,8 @@ class _PasswordResetViewState extends State<PasswordResetView> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color.fromRGBO(255, 147, 15, 1),
-                Color.fromRGBO(255, 249, 91, 1)
+                backgroundGradient1,
+                backgroundGradient2,
               ],
             ),
           ),
@@ -49,9 +51,12 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                 size: 100,
               ),
               const SizedBox(height: 15),
-              const Text("MyNotes", style: TextStyle(
-                fontSize: 30,
-              ),),
+              const Text(
+                "MyNotes",
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
               const SizedBox(height: 50),
               Container(
                 height: 280,
@@ -65,7 +70,7 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                   children: [
                     const SizedBox(height: 30),
                     const Text(
-                      "Enter email to reset your password",
+                      "Enter your email to reset password",
                       style: TextStyle(
                         fontSize: 15,
                         color: Colors.grey,
@@ -97,10 +102,8 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color.fromARGB(237, 0, 0, 0),
-                            Color.fromARGB(185, 0, 0, 0)
-                            // Color.fromRGBO(255, 147, 15, 1),
-                            // Color.fromRGBO(255, 249, 91, 1),
+                            buttonGradient1,
+                            buttonGradient2,
                           ],
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -120,9 +123,10 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                             ),
                           ),
                         ),
-                        onPressed: () {
-                          FirebaseAuth.instance
+                        onPressed: () async {
+                          await FirebaseAuth.instance
                               .sendPasswordResetEmail(email: _email.text);
+                          if (!mounted) return;
                           Navigator.of(context).pushNamed(signInRoute);
                         },
                         child: const Text(
