@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes/constants/colors.dart';
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
 import 'package:my_notes/view/notes/create_update_note_view.dart';
@@ -14,7 +15,12 @@ void main() {
     MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        primarySwatch: createMaterialColor(Color(0xFFFFD52E)),
+        // textButtonTheme: TextButtonThemeData(
+        //   style: TextButton.styleFrom(
+        //     foregroundColor: createMaterialColor(Color(0xFFFFD52E)),
+        //   ),
+        // ),
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
