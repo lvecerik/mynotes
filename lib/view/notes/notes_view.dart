@@ -18,6 +18,8 @@ enum MenuAction { signout }
 class _NotesViewState extends State<NotesView> {
   late final FirebaseCloudStorage _notesService;
   String get userId => AuthService.firebase().currentUser!.id;
+  String get userEmail => AuthService.firebase().currentUser!.email;
+  
 
   @override
   void initState() {
@@ -29,7 +31,7 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Your Notes"),
+          title:  Text("MyNotes $userEmail"),
           actions: [
             IconButton(
               onPressed: () {
@@ -43,8 +45,7 @@ class _NotesViewState extends State<NotesView> {
                   final shouldSignOut = await showSignOutDialog(context);
                   if (shouldSignOut) {
                     await AuthService.firebase().signOut();
-                    if (context.mounted) {
-                      // TOTO NIE JE DOBRY PRACTICE, ZISTI VIAC A PREROB --> original error https://dart-lang.github.io/linter/lints/use_build_context_synchronously.html
+                    if (mounted) {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         signInRoute,
                         (_) => false,

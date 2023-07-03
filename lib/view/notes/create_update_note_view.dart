@@ -50,7 +50,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
     if (_textController.text.isEmpty && note != null) {
       _notesService.deleteNote(documentId: note.documentId);
-    } 
+    }
   }
 
   void _saveNoteIfTextNotEmpty() async {
@@ -93,7 +93,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("New Note"),
+        title: Text(context.getArgument<CloudNote>() == null
+            ? "New Note"
+            : "Edit Note"),
         actions: [
           IconButton(
             onPressed: () async {

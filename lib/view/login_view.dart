@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_notes/components/my_textfields.dart';
+import 'package:my_notes/components/email_textfields.dart';
 import 'package:my_notes/constants/colors.dart';
 import "package:my_notes/services/auth/google_auth.dart";
 import 'package:my_notes/constants/routes.dart';
