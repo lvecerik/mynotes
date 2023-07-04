@@ -60,9 +60,10 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     final note = _note;
     final text = _textController.text;
     final title = _titleController.text;
+    final timestamp = DateTime.now().toString();
     if (text.isNotEmpty && note != null) {
       await _notesService.updateNote(
-          documentId: note.documentId, text: text, title: title);
+          documentId: note.documentId, text: text, title: title, timestamp: timestamp);
     }
   }
 
@@ -73,8 +74,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     }
     final text = _textController.text;
     final title = _titleController.text;
+    final timestamp = DateTime.now().toString();
     await _notesService.updateNote(
-        documentId: note.documentId, text: text, title: title);
+        documentId: note.documentId, text: text, title: title, timestamp: timestamp);
   }
 
   void _setUpTextControllerListener() {
@@ -141,7 +143,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                           expands: true,
                           decoration:
                               const InputDecoration(hintText: "Type here..."),
-                          autofocus: true,
                         ),
                       ),
                     ],

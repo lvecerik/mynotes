@@ -8,17 +8,20 @@ class CloudNote {
   final String ownerUserId;
   final String text;
   final String title;
+  final String timestamp;
 
   const CloudNote({
     required this.documentId,
     required this.ownerUserId,
     required this.text,
     required this.title,
+    required this.timestamp,
   });
 
   CloudNote.fromSnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       : documentId = snapshot.id,
         ownerUserId = snapshot.data()[ownerUserIdFieldName],
         text = snapshot.data()[textFieldName] as String,
-        title = snapshot.data()[titleFieldName] as String;
+        title = snapshot.data()[titleFieldName] as String,
+        timestamp = snapshot.data()[timestampFieldName] as String;
 }

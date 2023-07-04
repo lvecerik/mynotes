@@ -32,6 +32,7 @@ class NotesListView extends StatelessWidget {
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
               ),
+              subtitle: Text("Last edit ${note.timestamp}"),
               trailing: IconButton(
                 onPressed: () async {
                   final shouldDelete = await showDeleteDialog(context);

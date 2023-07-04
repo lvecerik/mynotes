@@ -9,14 +9,16 @@ class FirebaseCloudStorage {
     final document = await notes.add({
       ownerUserIdFieldName: ownerUserId,
       textFieldName: "",
-      titleFieldName: "test"
+      titleFieldName: "",
+      timestampFieldName: ""
     });
     final fetchedNote = await document.get();
     return CloudNote(
         documentId: fetchedNote.id,
         ownerUserId: ownerUserId,
         text: "",
-        title: "");
+        title: "",
+        timestamp: DateTime.now().toString());
   }
 
   Future<void> deleteNote({required String documentId}) async {
@@ -31,11 +33,13 @@ class FirebaseCloudStorage {
     required String documentId,
     required String text,
     required String title,
+    required String timestamp
   }) async {
     try {
       await notes.doc(documentId).update({
         textFieldName: text,
         titleFieldName: title,
+        timestampFieldName: DateTime.now().toString()
       });
     } catch (e) {
       throw CouldNotUpdateNoteException();
@@ -43,7 +47,8 @@ class FirebaseCloudStorage {
   }
 
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
-    return notes.snapshots().map(
+    final orderedNotes = notes.orderBy("timestamp", descending: true);
+    return orderedNotes.snapshots().map(
           (querySnapshot) => querySnapshot.docs
               .map(
                 (doc) => CloudNote.fromSnapshot(doc),
