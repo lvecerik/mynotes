@@ -17,11 +17,13 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   CloudNote? _note;
   late final FirebaseCloudStorage _notesService;
   late final TextEditingController _textController;
+  late final TextEditingController _titleController;
 
   @override
   void initState() {
     _notesService = FirebaseCloudStorage();
     _textController = TextEditingController();
+    _titleController = TextEditingController();
     super.initState();
   }
 
@@ -30,6 +32,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     if (widgetNote != null) {
       _note = widgetNote;
       _textController.text = widgetNote.text;
+      _titleController.text = widgetNote.title;
       return widgetNote;
     }
 
@@ -56,29 +59,29 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   void _saveNoteIfTextNotEmpty() async {
     final note = _note;
     final text = _textController.text;
+    final title = _titleController.text;
     if (text.isNotEmpty && note != null) {
       await _notesService.updateNote(
-        documentId: note.documentId,
-        text: text,
-      );
+          documentId: note.documentId, text: text, title: title);
     }
   }
 
-  void _textControllerListener() async {
+  void _textAndTitleControllerListener() async {
     final note = _note;
     if (note == null) {
       return;
     }
     final text = _textController.text;
+    final title = _titleController.text;
     await _notesService.updateNote(
-      documentId: note.documentId,
-      text: text,
-    );
+        documentId: note.documentId, text: text, title: title);
   }
 
   void _setUpTextControllerListener() {
-    _textController.removeListener(_textControllerListener);
-    _textController.addListener(_textControllerListener);
+    _textController.removeListener(_textAndTitleControllerListener);
+    _textController.addListener(_textAndTitleControllerListener);
+    _titleController.removeListener(_textAndTitleControllerListener);
+    _titleController.addListener(_textAndTitleControllerListener);
   }
 
   @override
@@ -86,6 +89,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     _deleteNoteIfEmpty();
     _saveNoteIfTextNotEmpty();
     _textController.dispose();
+    _titleController.dispose();
     super.dispose();
   }
 
@@ -117,11 +121,31 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
             case ConnectionState.done:
               {
                 _setUpTextControllerListener();
-                return TextField(
-                  controller: _textController,
-                  keyboardType: TextInputType.multiline,
-                  decoration: const InputDecoration(hintText: "Type here..."),
-                  autofocus: true,
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: _titleController,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(hintText: "Title"),
+                        autofocus: true,
+                      ),
+                      const SizedBox(height: 10),
+                      Expanded(
+                        child: TextField(
+                          controller: _textController,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          expands: true,
+                          decoration:
+                              const InputDecoration(hintText: "Type here..."),
+                          autofocus: true,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               }
 

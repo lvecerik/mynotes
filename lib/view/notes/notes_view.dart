@@ -39,7 +39,6 @@ class _NotesViewState extends State<NotesView> {
             },
             icon: const Icon(Icons.note_add_outlined),
             tooltip: "Create new note",
-            
           ),
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
@@ -80,7 +79,8 @@ class _NotesViewState extends State<NotesView> {
                   return NotesListView(
                     notes: allNotes,
                     onDeleteNote: (note) async {
-                      await _notesService.deleteNote(documentId: note.documentId);
+                      await _notesService.deleteNote(
+                          documentId: note.documentId);
                     },
                     onTap: (note) {
                       Navigator.of(context)
