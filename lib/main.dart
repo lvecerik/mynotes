@@ -13,14 +13,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MyNotes',
       theme: ThemeData(
-        primarySwatch: createMaterialColor(Color(0xFFFFD52E)),
-        // textButtonTheme: TextButtonThemeData(
-        //   style: TextButton.styleFrom(
-        //     foregroundColor: createMaterialColor(Color(0xFFFFD52E)),
-        //   ),
-        // ),
+        primarySwatch: createMaterialColor(const Color(0xFFFFD52E)),
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),
