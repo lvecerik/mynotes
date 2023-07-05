@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes/components/logo.dart';
 import 'package:my_notes/constants/colors.dart';
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
@@ -36,14 +37,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 Icons.note_add,
                 size: 100,
               ),
-              const SizedBox(height: 15),
-              const Text(
-                "MyNotes",
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              const SizedBox(height: 50),
+              const Logo(),
               Container(
                 height: 280,
                 width: 325,
@@ -75,7 +69,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                       child: const Text(
                         "Send email verfication",
                         style: TextStyle(
-                          color: emphasisColor,
+                          color: darkYellow,
+                          
                         ),
                       ),
                     ),

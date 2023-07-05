@@ -48,18 +48,22 @@ class FirebaseCloudStorage {
   }
 
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
-    //final orderedNotes = notes.orderBy("timestamp", descending: true);
     final onlyUsersNotes = notes
-        .where(
-          ownerUserIdFieldName,
-          isEqualTo: ownerUserId,
-        )
-        .snapshots()
-        .map((querySnapshot) => querySnapshot.docs.map(
-              (doc) => CloudNote.fromSnapshot(doc),
-            ));
+      .where(
+        ownerUserIdFieldName,
+        isEqualTo: ownerUserId,
+      )
+      .snapshots()
+      .map((querySnapshot) {
+        final notesList = querySnapshot.docs.map(
+          (doc) => CloudNote.fromSnapshot(doc),
+        ).toList();
 
-    return onlyUsersNotes;
+        notesList.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+        return notesList;
+      });
+
+  return onlyUsersNotes;
   }
 
   static final FirebaseCloudStorage _shared =

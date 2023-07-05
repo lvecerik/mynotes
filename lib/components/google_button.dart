@@ -18,6 +18,10 @@ class GoogleButton extends StatelessWidget {
             Radius.circular(50),
           ),
         ),
+      ).merge(
+        ButtonStyle(
+          overlayColor: MaterialStateProperty.all<Color>(Colors.transparent),
+        ),
       ),
       onPressed: () async {
         await GoogleAuthService().signInWithGoogle();

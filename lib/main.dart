@@ -8,6 +8,8 @@ import 'package:my_notes/view/password_reset_view.dart';
 import 'package:my_notes/view/verify_email_view.dart';
 import 'package:my_notes/view/login_view.dart';
 import 'package:my_notes/view/register_view.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +17,10 @@ void main() {
     MaterialApp(
       title: 'MyNotes',
       theme: ThemeData(
+        hoverColor: Colors.transparent,
+        splashColor: emphasisColor,
         primarySwatch: createMaterialColor(const Color(0xFFFFD52E)),
+        textTheme: GoogleFonts.robotoTextTheme()
       ),
       debugShowCheckedModeBanner: false,
       home: const HomePage(),

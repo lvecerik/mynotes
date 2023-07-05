@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
 import 'package:my_notes/services/cloud/cloud_note.dart';
@@ -31,7 +32,20 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MyNotes $userEmail"),
+        title: Row(
+          children: [
+            Text(
+              "MyNotes ",
+              style: GoogleFonts.permanentMarker(fontSize: 30),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text(
+                userEmail,
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             onPressed: () {

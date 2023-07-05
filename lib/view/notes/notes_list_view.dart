@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_notes/constants/colors.dart';
 import 'package:my_notes/services/cloud/cloud_note.dart';
 import 'package:my_notes/utilities/dialogs/delete_dialog.dart';
 
@@ -25,6 +26,7 @@ class NotesListView extends StatelessWidget {
         return Card(
           elevation: 0,
           child: ListTile(
+            hoverColor: appleWhite,
             onTap: () => onTap(note),
             title: Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
@@ -46,8 +48,12 @@ class NotesListView extends StatelessWidget {
               fit: BoxFit.fill,
               child: Row(
                 children: [
-                  Text(note.timestamp, style: const TextStyle(fontStyle: FontStyle.italic),),
+                  Text(
+                    note.timestamp,
+                    style: const TextStyle(fontStyle: FontStyle.italic),
+                  ),
                   IconButton(
+                    tooltip: "Delete note",
                     onPressed: () async {
                       final shouldDelete = await showDeleteDialog(context);
                       if (shouldDelete) {

@@ -7,7 +7,9 @@ const buttonGradient1 = Color.fromARGB(237, 0, 0, 1);
 const buttonGradient2 = Color.fromARGB(185, 0, 0, 1);
 
 const emphasisColor = Color.fromRGBO(255, 213, 46, 1);
-
+const appleGrey = Color.fromRGBO(229, 229, 229, 1);
+const appleWhite = Color.fromRGBO(249, 249, 249, 1);
+const darkYellow = Color.fromRGBO(233, 179, 63, 1);
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];

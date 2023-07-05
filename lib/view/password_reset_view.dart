@@ -1,7 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:my_notes/components/logo.dart';
 import 'package:my_notes/constants/colors.dart';
 import 'package:my_notes/constants/routes.dart';
+import 'package:my_notes/services/auth/auth_exceptions.dart';
+import 'package:my_notes/services/auth/auth_service.dart';
+import 'package:my_notes/utilities/dialogs/error_dialog.dart';
+import 'package:my_notes/utilities/parse_exc_msg.dart';
 
 class PasswordResetView extends StatefulWidget {
   const PasswordResetView({super.key});
@@ -50,14 +55,7 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                 Icons.note_add,
                 size: 100,
               ),
-              const SizedBox(height: 15),
-              const Text(
-                "MyNotes",
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              const SizedBox(height: 50),
+              const Logo(),
               Container(
                 height: 280,
                 width: 325,
@@ -124,10 +122,25 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                           ),
                         ),
                         onPressed: () async {
-                          await FirebaseAuth.instance
-                              .sendPasswordResetEmail(email: _email.text);
-                          if (!mounted) return;
-                          Navigator.of(context).pushNamed(signInRoute);
+                          try {
+                            await AuthService.firebase()
+                                .sendPasswordResetEmail(email: _email.text);
+                          } on UserNotFoundAuthException {
+                            await showErrorDialog(
+                              context,
+                              "User does not exist",
+                            );
+                          } on InvalidEmailAuthException {
+                            await showErrorDialog(
+                              context,
+                              "Invalid email",
+                            );
+                          } on GenericAuthException {
+                            await showErrorDialog(
+                              context,
+                              "Unknown error",
+                            );
+                          }
                         },
                         child: const Text(
                           "Reset Password",
@@ -138,17 +151,14 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 50),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(signInRoute);
-                        },
-                        child: const Text(
-                          "Back to sign in page",
-                          style: TextStyle(color: Colors.black),
-                        ),
+                    const SizedBox(height: 35),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(signInRoute);
+                      },
+                      child: const Text(
+                        "Return back",
+                        style: TextStyle(color: darkYellow),
                       ),
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_notes/components/google_button.dart';
 import 'package:my_notes/components/email_textfields.dart';
+import 'package:my_notes/components/logo.dart';
 import 'package:my_notes/constants/colors.dart';
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_exceptions.dart';
@@ -62,16 +63,9 @@ class _RegisterViewState extends State<RegisterView> {
                 Icons.note_add,
                 size: 100,
               ),
-              const SizedBox(height: 15),
-              const Text(
-                "MyNotes",
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              const SizedBox(height: 50),
+              const Logo(),
               Container(
-                height: 480,
+                height: 430,
                 width: 325,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -82,9 +76,9 @@ class _RegisterViewState extends State<RegisterView> {
                   children: [
                     const SizedBox(height: 30),
                     const Text(
-                      "Create an account",
+                      "Create account",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 16,
                         color: Colors.grey,
                       ),
                     ),
@@ -145,7 +139,7 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     DecoratedBox(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
@@ -219,9 +213,11 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
+                    const GoogleButton(),
+                    const SizedBox(height: 25),
                     Row(
-                      //sign up
+                      
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Already have an account?"),
@@ -235,16 +231,14 @@ class _RegisterViewState extends State<RegisterView> {
                           child: const Text(
                             "Sign in",
                             style: TextStyle(
-                              color: Color.fromRGBO(233, 179, 63, 1),
+                              color: darkYellow
                             ),
                           ),
                         )
                       ],
                     ),
                     //const SizedBox(height: 5),
-                    const Text("or"),
                     const SizedBox(height: 10),
-                    const GoogleButton(),
                   ],
                 ),
               ),

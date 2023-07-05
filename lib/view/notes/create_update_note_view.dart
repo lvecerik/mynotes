@@ -145,7 +145,13 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       TextField(
                         controller: _titleController,
                         keyboardType: TextInputType.multiline,
-                        decoration: const InputDecoration(hintText: "Title"),
+                        decoration: const InputDecoration(
+                          hintText: "Title",
+                          hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                         autofocus: false,
                       ),
                       const SizedBox(height: 10),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_notes/components/email_textfields.dart';
+import 'package:my_notes/components/google_button.dart';
+import 'package:my_notes/components/logo.dart';
 import 'package:my_notes/constants/colors.dart';
 import "package:my_notes/services/auth/google_auth.dart";
 import 'package:my_notes/constants/routes.dart';
@@ -56,16 +59,9 @@ class _LoginViewState extends State<LoginView> {
                 Icons.note_add,
                 size: 100,
               ),
-              const SizedBox(height: 15),
-              const Text(
-                "MyNotes",
-                style: TextStyle(
-                  fontSize: 30,
-                ),
-              ),
-              const SizedBox(height: 50),
+              const Logo(),
               Container(
-                height: 480,
+                height: 430,
                 width: 325,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -78,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
                     const Text(
                       "Welcome back!",
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 16,
                         color: Colors.grey,
                       ),
                     ),
@@ -125,14 +121,14 @@ class _LoginViewState extends State<LoginView> {
                               "Forgot Password?",
                               style: TextStyle(
                                 color: Colors.grey,
-                                fontSize: 15,
+                                fontSize: 14,
                               ),
                             ),
                           )
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     DecoratedBox(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
@@ -167,7 +163,6 @@ class _LoginViewState extends State<LoginView> {
                               password: password,
                             );
                             final user = AuthService.firebase().currentUser;
-                            print(user?.id);
                             if (!mounted) return;
                             if (user?.isEmailVerified ?? false) {
                               Navigator.of(context).pushNamedAndRemoveUntil(
@@ -186,6 +181,10 @@ class _LoginViewState extends State<LoginView> {
                             await showErrorDialog(
                               context,
                               "Incorrect password",
+                            );} on InvalidEmailAuthException {
+                            await showErrorDialog(
+                              context,
+                              "Invalid email",
                             );
                           } on GenericAuthException {
                             await showErrorDialog(
@@ -203,34 +202,11 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    OutlinedButton.icon(
-                      style: OutlinedButton.styleFrom(
-                        minimumSize: const Size(250, 50),
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(50),
-                          ),
-                        ),
-                      ),
-                      onPressed: () async {
-                        await GoogleAuthService().signInWithGoogle();
-                        if (!mounted) return;
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            notesRoute, (route) => false);
-                      },
-                      icon: Image.asset("assets/images/google_icon.png"),
-                      label: const Text(
-                        "Sign in with Google",
-                        style: TextStyle(fontSize: 17, color: Colors.black),
-                      ),
-                    ),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 15),
+                    const GoogleButton(),
+                    const SizedBox(height: 40),
                     Row(
-                      //sign up
+                      
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("First time here?"),
@@ -244,7 +220,7 @@ class _LoginViewState extends State<LoginView> {
                           child: const Text(
                             "Sign up",
                             style: TextStyle(
-                              color: Color.fromRGBO(233, 179, 63, 1),
+                              color: darkYellow,
                             ),
                           ),
                         )
