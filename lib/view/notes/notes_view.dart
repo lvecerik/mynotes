@@ -5,7 +5,6 @@ import 'package:my_notes/services/auth/auth_service.dart';
 import 'package:my_notes/services/cloud/cloud_note.dart';
 import 'package:my_notes/services/cloud/firebase_cloud_storage.dart';
 import 'package:my_notes/utilities/dialogs/sign_out_dialog.dart';
-import 'package:my_notes/view/notes/create_update_note_view.dart';
 import 'package:my_notes/view/notes/notes_list_view.dart';
 
 class NotesView extends StatefulWidget {

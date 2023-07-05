@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_notes/components/logo.dart';
 import 'package:my_notes/constants/colors.dart';
@@ -6,7 +5,7 @@ import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_exceptions.dart';
 import 'package:my_notes/services/auth/auth_service.dart';
 import 'package:my_notes/utilities/dialogs/error_dialog.dart';
-import 'package:my_notes/utilities/parse_exc_msg.dart';
+import 'package:my_notes/utilities/dialogs/password_reset_dialog.dart';
 
 class PasswordResetView extends StatefulWidget {
   const PasswordResetView({super.key});
@@ -125,6 +124,13 @@ class _PasswordResetViewState extends State<PasswordResetView> {
                           try {
                             await AuthService.firebase()
                                 .sendPasswordResetEmail(email: _email.text);
+
+                            if (!mounted) return;
+                            await showPasswordResetDialog(context,
+                                "Check your email to set new password");
+                            if (!mounted) return;
+                            Navigator.of(context).pushNamed(signInRoute);
+
                           } on UserNotFoundAuthException {
                             await showErrorDialog(
                               context,

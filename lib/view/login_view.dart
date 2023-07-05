@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:my_notes/components/email_textfields.dart';
 import 'package:my_notes/components/google_button.dart';
 import 'package:my_notes/components/logo.dart';
 import 'package:my_notes/constants/colors.dart';
-import "package:my_notes/services/auth/google_auth.dart";
 import 'package:my_notes/constants/routes.dart';
 import 'package:my_notes/services/auth/auth_exceptions.dart';
 import 'package:my_notes/services/auth/auth_service.dart';

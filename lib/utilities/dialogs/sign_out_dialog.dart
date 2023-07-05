@@ -7,7 +7,7 @@ Future<bool> showSignOutDialog(BuildContext context) {
     title: "Sign out",
     content: "Are you sure you want to sign out?",
     optionBuilder: () => {
-      "Sign Out": true,
+      "Sign out": true,
       "Close": false
     },
   ).then((value) => value ?? false);
