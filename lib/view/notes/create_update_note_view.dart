@@ -61,9 +61,20 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     final text = _textController.text;
     final title = _titleController.text;
     final timestamp = DateTime.now().toString();
+
     if (text.isNotEmpty && note != null) {
       await _notesService.updateNote(
-          documentId: note.documentId, text: text, title: title, timestamp: timestamp);
+          documentId: note.documentId,
+          text: text,
+          title: title,
+          timestamp: timestamp);
+    }
+    if (title.isEmpty && note != null) {
+      await _notesService.updateNote(
+          documentId: note.documentId,
+          text: text,
+          title: "New Note",
+          timestamp: timestamp);
     }
   }
 
@@ -76,7 +87,10 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     final title = _titleController.text;
     final timestamp = DateTime.now().toString();
     await _notesService.updateNote(
-        documentId: note.documentId, text: text, title: title, timestamp: timestamp);
+        documentId: note.documentId,
+        text: text,
+        title: title,
+        timestamp: timestamp);
   }
 
   void _setUpTextControllerListener() {
@@ -132,7 +146,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                         controller: _titleController,
                         keyboardType: TextInputType.multiline,
                         decoration: const InputDecoration(hintText: "Title"),
-                        autofocus: true,
+                        autofocus: false,
                       ),
                       const SizedBox(height: 10),
                       Expanded(
@@ -141,6 +155,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                           expands: true,
+                          autofocus: true,
                           decoration:
                               const InputDecoration(hintText: "Type here..."),
                         ),

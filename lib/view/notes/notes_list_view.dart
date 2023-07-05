@@ -25,23 +25,41 @@ class NotesListView extends StatelessWidget {
         return Card(
           elevation: 0,
           child: ListTile(
-              onTap: () => onTap(note),
-              title: Text(
+            onTap: () => onTap(note),
+            title: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Text(
                 note.title,
                 maxLines: 1,
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text("Last edit ${note.timestamp}"),
-              trailing: IconButton(
-                onPressed: () async {
-                  final shouldDelete = await showDeleteDialog(context);
-                  if (shouldDelete) {
-                    onDeleteNote(note);
-                  }
-                },
-                icon: const Icon(Icons.delete),
-              )),
+            ),
+            subtitle: Text(
+              note.text,
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+            ),
+            trailing: FittedBox(
+              fit: BoxFit.fill,
+              child: Row(
+                children: [
+                  Text(note.timestamp, style: const TextStyle(fontStyle: FontStyle.italic),),
+                  IconButton(
+                    onPressed: () async {
+                      final shouldDelete = await showDeleteDialog(context);
+                      if (shouldDelete) {
+                        onDeleteNote(note);
+                      }
+                    },
+                    icon: const Icon(Icons.delete),
+                  ),
+                ],
+              ),
+            ),
+          ),
         );
       },
     );
